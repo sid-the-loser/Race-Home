@@ -13,6 +13,8 @@ namespace Sid.Scripts.MainMenu
 
         [Header("Menu Audio")] 
         [SerializeField] private AudioSource clickSounds;
+
+        [SerializeField] private float buttonDelay = 0.1f;
         
         [Header("Menu and Related")]
         [SerializeField] private GameObject[] menuArray;
@@ -27,12 +29,15 @@ namespace Sid.Scripts.MainMenu
             mainCamera.transform.rotation = Quaternion.Euler(_initialCameraRotation.x, 0, _initialCameraRotation.z);
             UpdateCurrentMenu();
             GlobalVariables.Difficulty = 0;
+            GlobalVariables.GameFailed = false; // instead, i could put this in a game object that handles something in
+                                                // the gameplay scene
         }
 
         private void Update()
         {
             _currentY += rotationAnimationSpeed * Time.deltaTime;
-            mainCamera.transform.rotation = Quaternion.Euler(_initialCameraRotation.x, _currentY, _initialCameraRotation.z);
+            mainCamera.transform.rotation = Quaternion.Euler(_initialCameraRotation.x, _currentY, 
+                _initialCameraRotation.z);
         }
 
         public void SetCurrentMenu(int index)
@@ -66,21 +71,21 @@ namespace Sid.Scripts.MainMenu
         {
             clickSounds.Play();
             GlobalVariables.Difficulty = 0;
-            Invoke(nameof(StartStory), 0.1f);
+            Invoke(nameof(StartStory), buttonDelay);
         }
 
         public void NormalButtonLogic()
         {
             clickSounds.Play();
             GlobalVariables.Difficulty = 1;
-            Invoke(nameof(StartStory), 0.1f);
+            Invoke(nameof(StartStory), buttonDelay);
         }
 
         public void HardButtonLogic()
         {
             clickSounds.Play();
             GlobalVariables.Difficulty = 2;
-            Invoke(nameof(StartStory), 0.1f);
+            Invoke(nameof(StartStory), buttonDelay);
         }
     }
 }

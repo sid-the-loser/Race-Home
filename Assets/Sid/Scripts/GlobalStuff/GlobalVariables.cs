@@ -6,5 +6,6 @@ namespace Sid.Scripts.GlobalStuff
     {
         public static bool Paused = false;
         public static int Difficulty = 0;
+        public static bool GameFailed = false;
     }
 }
